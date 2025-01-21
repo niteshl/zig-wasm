@@ -1,0 +1,50 @@
+version: '3'
+
+vars:
+  SRC_DIR: src
+
+tasks:
+  create_build_dir:
+    desc: Create the build directory
+    cmds:
+      - mkdir -p build
+
+  build_math:
+    desc: Build the math module
+    deps:
+      - create_build_dir
+    cmds:
+      - zig build-exe {{.SRC_DIR}}/math.zig -target wasm32-freestanding -fno-entry --export=add -femit-bin=build/math.wasm -OReleaseSmall
+
+  run_math:
+    desc: Run the math module
+    deps:
+      - build_math
+    cmds:
+      - node {{.SRC_DIR}}/test.js
+
+  build_wasi_args:
+    desc: Build the wasi_args module
+    deps:
+      - create_build_dir
+    cmds:
+      - zig build-exe {{.SRC_DIR}}/wasi_args.zig -target wasm32-wasi -femit-bin=build/wasi_args.wasm -OReleaseSmall
+
+  run_wasi_args:
+    desc: Run the wasi_args module
+    deps:
+      - build_wasi_args
+    cmds:
+      - wasmtime build/wasi_args.wasm 123 hello
+
+  install_http_server:
+    desc: Install http server
+    cmds:
+      - npm install -g http-server
+
+  run_http_server:
+    desc: run http-server
+    deps:
+      - install_http_server
+    cmd:
+      http-server

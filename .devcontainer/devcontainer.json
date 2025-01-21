@@ -1,0 +1,42 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
+{
+	"name": "Zig Dev Container",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
+	"features": {
+		"ghcr.io/devcontainers-contrib/features/zig:1": {
+			"version": "master"
+		}
+		,
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "lts"
+		},
+		"devwasm.azurecr.io/dev-wasm/dev-wasm-feature/wasmtime-wasi:0.0.16": {
+            "version": "24"
+        },
+		"ghcr.io/audacioustux/devcontainers/taskfile:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ziglang.vscode-zig",
+				"vadimcn.vscode-lldb",
+				"task.vscode-task"
+			]
+		}
+	}
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
+
