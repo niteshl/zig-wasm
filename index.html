@@ -1,0 +1,17 @@
+<html>
+<body>
+  <script>
+    fetch('build/math.wasm').then(response =>
+      response.arrayBuffer()
+    ).then(bytes =>
+      WebAssembly.instantiate(bytes, {
+  env: {
+    print: (result) => { console.log(`The result is ${result}`); }
+  }})
+    ).then(results => {
+      window.add = results.instance.exports.add;
+      add(12,34);
+    });
+  </script>
+</body>
+</html>
